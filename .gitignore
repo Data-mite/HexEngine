@@ -175,3 +175,12 @@ cython_debug/
 
 # Local Exclusions
 /firestore-mover
+graph_test.py
+.gitignore
+graph.py
+path_output
+.gitignore
+path_output.png
+test_graph
+test_graph.png
+.gitignore

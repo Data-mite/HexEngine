@@ -1,0 +1,164 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "HexEngine API",
+    "description": "Access and manage hex generation tables stored in Firestore via HexEngine.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://hexengine-dot-emotionengine.ue.r.appspot.com",
+      "description": "Deployed HexEngine backend"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "checkStatus",
+        "summary": "Check if HexEngine is online",
+        "responses": {
+          "200": {
+            "description": "HexEngine is online and responding.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/{doc_id}": {
+      "get": {
+        "operationId": "getTableEntry",
+        "summary": "Retrieve a table entry by document ID",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The document ID in Firestore"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Document data retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Document not found"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/post/{doc_id}": {
+      "post": {
+        "operationId": "postTableEntry",
+        "summary": "Write or update a document entry",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The document ID to write or update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Document successfully written",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "doc": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["status", "doc"]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/list": {
+      "get": {
+        "operationId": "listTableIds",
+        "summary": "List all document IDs in the hex_generation_log collection",
+        "responses": {
+          "200": {
+            "description": "List of document IDs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  }
+}
