@@ -184,3 +184,4 @@ path_output.png
 test_graph
 test_graph.png
 .gitignore
+/Generator
